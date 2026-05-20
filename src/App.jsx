@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import Admin from './components/Admin'
 import Customer from './components/Customer'
 import Home from './components/Home'
 import AdminDashboard from './components/AdminDashboard'
+import Admin from './components/Admin'
 
 function App() {
 
