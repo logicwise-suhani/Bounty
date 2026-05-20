@@ -86,7 +86,7 @@ function Round({ onClose }) {
 
         const updated = [...existing, ...rounds.map(r => ({
             ...r,
-            id: Date.now(Math.random())
+            id: Date.now() + Math.random()
         }))];
 
         localStorage.setItem("rounds", JSON.stringify(updated));

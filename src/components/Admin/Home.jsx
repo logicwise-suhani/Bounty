@@ -7,7 +7,7 @@ function Home() {
     return (
         <>
             <div>
-                <button onClick={() => navigate("/create-bounty")}>ADMIN</button>
+                <button onClick={() => navigate("/create-bounty")}>ADMIN</button> {" "}
                 <button onClick={() => navigate("/customer")}>CUSTOMER</button>
             </div>
         </>

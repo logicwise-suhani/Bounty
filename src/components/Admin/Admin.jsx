@@ -133,6 +133,7 @@ function Admin() {
                         <p style={{ color: "red" }}>{loginError}</p>
                     )}
 
+                    <button onClick={() => navigate("/")}>BACK</button> {" "}
                     <button onClick={handleLogin}>Login</button>
                 </div>
             </form>

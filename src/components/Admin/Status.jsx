@@ -10,8 +10,8 @@ function Status({ onClose }) {
             setChancesCount(parsedRoundData.length ? parsedRoundData[0].chances : 0)
         }
     }, []);
-
-    return (
+ 
+    return ( 
         <>
             <div>
                 {Array.from({ length: chancesCount }).map((_, i) => (
