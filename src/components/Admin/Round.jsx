@@ -113,120 +113,124 @@ function Round({ onClose }) {
 
     return (
         <>
-            <div>
-                {rounds.map((round, index) => (
-                    <div key={index} style={{ marginBottom: "20px" }}>
-                        <div>
-                            Round Number:
-                            <input
-                                type="number"
-                                min="1"
-                                name="roundNumber"
-                                value={round.roundNumber}
-                                onChange={(e) => handleChange(index, e)}
-                            />
-                            {errors[index]?.roundNumber && (
-                                <p style={{ color: "red" }}>
-                                    {errors[index].roundNumber}
-                                </p>
-                            )}
-                        </div>
+            <div className="create-round">
+                <div className="rounds">
+                    {rounds.map((round, index) => (
+                        <div key={index} style={{ marginBottom: "20px" }}>
+                            <div>
+                                Round Number: {" "}
+                                <input
+                                    type="number"
+                                    min="1"
+                                    name="roundNumber"
+                                    value={round.roundNumber}
+                                    onChange={(e) => handleChange(index, e)}
+                                />
+                                {errors[index]?.roundNumber && (
+                                    <p style={{ color: "red" }}>
+                                        {errors[index].roundNumber}
+                                    </p>
+                                )}
+                            </div>
 
-                        <div>
-                            Max Players:
-                            <input
-                                type="number"
-                                min="1"
-                                max="9"
-                                name="players"
-                                value={round.players}
-                                onChange={(e) => handleChange(index, e)}
-                            />
-                            {errors[index]?.players && (
-                                <p style={{ color: "red" }}>
-                                    {errors[index].players}
-                                </p>
-                            )}
-                        </div>
+                            <div>
+                                Max Players: {" "}
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="9"
+                                    name="players"
+                                    value={round.players}
+                                    onChange={(e) => handleChange(index, e)}
+                                />
+                                {errors[index]?.players && (
+                                    <p style={{ color: "red" }}>
+                                        {errors[index].players}
+                                    </p>
+                                )}
+                            </div>
 
-                        <div>
-                            Chances:
-                            <input
-                                type="number"
-                                name="chances"
-                                value={round.chances}
-                                onChange={(e) => handleChange(index, e)}
-                            />
-                            {errors[index]?.chances && (
-                                <p style={{ color: "red" }}>
-                                    {errors[index].chances}
-                                </p>
-                            )}
-                        </div>
+                            <div>
+                                Chances: {" "}
+                                <input
+                                    type="number"
+                                    name="chances"
+                                    defaultValue={6}
+                                />
+                                {errors[index]?.chances && (
+                                    <p style={{ color: "red" }}>
+                                        {errors[index].chances}
+                                    </p>
+                                )}
+                            </div>
 
-                        <div>
-                            Bet Multiplier:
-                            <input
-                                type="text"
-                                name="betMultiplier"
-                                value={round.betMultiplier}
-                                onChange={(e) => handleChange(index, e)}
-                            />
-                            {errors[index]?.betMultiplier && (
-                                <p style={{ color: "red" }}>
-                                    {errors[index].betMultiplier}
-                                </p>
-                            )}
-                        </div>
+                            <div>
+                                Bet Multiplier: {" "}
+                                <input
+                                    type="text"
+                                    name="betMultiplier"
+                                    defaultValue={10}
+                                />
+                                {errors[index]?.betMultiplier && (
+                                    <p style={{ color: "red" }}>
+                                        {errors[index].betMultiplier}
+                                    </p>
+                                )}
+                            </div>
 
-                        <div>
-                            Time:
-                            <input
-                                type="time"
-                                name="time"
-                                value={round.time}
-                                onChange={(e) => handleChange(index, e)}
-                            />
-                            {errors[index]?.time && (
-                                <p style={{ color: "red" }}>
-                                    {errors[index].time}
-                                </p>
-                            )}
+                            <div>
+                                Time: {" "}
+                                <input
+                                    type="time"
+                                    name="time"
+                                    value={round.time}
+                                    onChange={(e) => handleChange(index, e)}
+                                />
+                                {errors[index]?.time && (
+                                    <p style={{ color: "red" }}>
+                                        {errors[index].time}
+                                    </p>
+                                )}
+                            </div>
                         </div>
+                    ))}
+                </div>
+
+                <div className="save-btn">
+                    <button onClick={handleSave}>Save Round</button>{" "}
+                </div>
+
+                <br />
+                <hr style={{ width: "100%", color: "black" }} />
+
+                <div className="rounds-created">
+                    <h3>Rounds Created</h3>
+                    {roundsDisplay.length === 0 ? (
+                        <p>No rounds found</p>
+                    ) : (
+                        roundsDisplay.map((round) => (
+                            <div
+                                key={round.id}
+                                style={{
+                                    border: "1px solid #ccc",
+                                    margin: "20px",
+                                    padding: "10px",
+                                }}
+                            >
+                                <p><b>Round Number:</b> {round.roundNumber}</p>
+                                <p><b>Players:</b> {round.players} </p>
+                                <p><b>Chances:</b> {round.chances} </p>
+                                <p><b>Bet Multiplier:</b> {round.betMultiplier} </p>
+                                <p><b>Time:</b> {round.time} </p>
+                                <button onClick={() => handleDelete(round.id)}>Delete</button>
+                            </div>
+                        ))
+                    )}
+
+                    <div>
+                        <button onClick={onClose}>Close</button>
                     </div>
-                ))}
-            </div>
-
-            <div>
-                <button onClick={handleSave}>Save Rounds</button>{" "}
-                <button onClick={onClose}>Close</button>
-            </div>
-
-            <br />
-            <hr style={{ width: "100%" }} />
-            <div>
-                <h3>Rounds Created</h3>
-                {roundsDisplay.length === 0 ? (
-                    <p>No rounds found</p>
-                ) : (
-                    roundsDisplay.map((round) => (
-                        <div
-                            key={round.id}
-                            style={{
-                                border: "1px solid #ccc",
-                                margin: "20px",
-                                padding: "10px",
-                            }}
-                        >
-                            <p><b>Round Number:</b> {round.roundNumber}</p>
-                            <p><b>Players:</b> {round.players} </p>
-                            <p><b>Chances:</b> {round.chances} </p>
-                            <p><b>Bet Multiplier:</b> {round.betMultiplier} </p>
-                            <p><b>Time:</b> {round.time} </p>
-                            <button onClick={() => handleDelete(round.id)}>Delete</button>
-                        </div>
-                    ))
-                )}
+                </div>
             </div>
         </>
     );

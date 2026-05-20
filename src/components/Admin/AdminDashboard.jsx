@@ -29,19 +29,20 @@ function AdminDashboard() {
 
     return (
         <>
-            {!show ? <div>
-                <h3>Admin Dashboard</h3>
-                <div>
-                    <button onClick={() => setShow("round")}>Create Round</button> {" "}
-                    <button onClick={() => setShow("status")}>Status</button> {" "}
-                    <button onClick={() => setShow("reveal")}>Reveal</button> {" "}
-                    <button onClick={() => setShow("players")}>Players</button> {" "}
-                    <button onClick={() => setShow("results")}>Results</button>
-                </div>
+            {!show ?
+                <div className="admin-dashboard">
+                    <h3>Admin Dashboard</h3>
+                    <div>
+                        <button onClick={() => setShow("round")}>Create Round</button> {" "}
+                        <button onClick={() => setShow("status")}>Status</button> {" "}
+                        <button onClick={() => setShow("reveal")}>Reveal</button> {" "}
+                        <button onClick={() => setShow("players")}>Players</button> {" "}
+                        <button onClick={() => setShow("results")}>Results</button>
+                    </div>
 
-                <br />
-                <button onClick={handleLogout}>LogOut</button>
-            </div> :
+                    <br />
+                    <button onClick={handleLogout}>LogOut</button>
+                </div> :
                 (
                     <>
                         {show === "round" && <Round onClose={() => setShow("")} />}

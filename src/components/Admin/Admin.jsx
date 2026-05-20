@@ -96,7 +96,7 @@ function Admin() {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="admin-login">
                     <h2>Login</h2>
 
                     <input

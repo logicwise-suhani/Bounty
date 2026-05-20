@@ -1,0 +1,154 @@
+.admin-dashboard {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.admin-dashboard h3 {
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #222;
+}
+
+.admin-dashboard div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.admin-dashboard button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #4f46e5;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.admin-dashboard button:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
+}
+
+
+.admin-dashboard>button:last-child {
+    background: #dc2626;
+}
+
+.admin-dashboard>button:last-child:hover {
+    background: #b91c1c;
+}
+
+.admin-login {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.admin-login h2 {
+    color: black;
+    font-weight: 800;
+}
+
+.admin-login button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #4f46e5;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.admin-login button:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
+}
+
+.admin-login input {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    color: black;
+    outline: none;
+}
+
+.create-round {
+    max-width: 500px;
+    margin: 60px 230px;
+    padding: 80px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.rounds div {
+    font-size: 24px;
+    color: black;
+    text-align: left;
+}
+
+.create-round input {
+    margin-left: 20px;
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid black;
+    background-color: white;
+    color: red;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    outline: none;
+}
+
+.create-round input[type="time"] {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+    width: 150px;
+    cursor: pointer;
+}
+
+.save-btn button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #4f46e5;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.save-btn button:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
+}
+
+.rounds-created h3 {
+    font-size: 16px;
+
+}
