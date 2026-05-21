@@ -60,7 +60,7 @@ function Customer() {
     const currentRound = rounds[currentRoundIndex];
 
     return (
-        <>
+        <> 
             <div>
                 <div className="customer-details">
                     <h3>Balance: ₹1000</h3>

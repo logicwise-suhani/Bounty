@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function Players({ onClose }) {
     const [rounds, setRounds] = useState([]);
- 
+
     useEffect(() => {
         const roundsData = localStorage.getItem("rounds");
 
@@ -11,7 +11,8 @@ function Players({ onClose }) {
             setRounds(parsedRoundData);
         }
     }, []);
-  
+
+
     return (
         <>
             <div>
@@ -53,8 +54,7 @@ function Players({ onClose }) {
                                 </tbody>
                             </table>
                         </div>
-                    ))
-                )}
+                    )))}
 
                 <button onClick={onClose}>Close</button>
             </div>

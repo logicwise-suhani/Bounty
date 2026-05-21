@@ -36,7 +36,6 @@ function AdminDashboard() {
                         <button onClick={() => setShow("round")}>Create Round</button> {" "}
                         <button onClick={() => setShow("status")}>Status</button> {" "}
                         <button onClick={() => setShow("reveal")}>Reveal</button> {" "}
-                        <button onClick={() => setShow("players")}>Players</button> {" "}
                         <button onClick={() => setShow("results")}>Results</button>
                     </div>
 
@@ -45,7 +44,12 @@ function AdminDashboard() {
                 </div> :
                 (
                     <>
-                        {show === "round" && <Round onClose={() => setShow("")} />}
+                        {show === "round" && (
+                            <Round
+                                onClose={() => setShow("")}
+                                goToPlayers={() => setShow("players")}
+                            />
+                        )}
                         {show === "status" && <Status onClose={() => setShow("")} />}
                         {show === "reveal" && <RevealNumber onClose={() => setShow("")} />}
                         {show === "players" && <Players onClose={() => setShow("")} />}

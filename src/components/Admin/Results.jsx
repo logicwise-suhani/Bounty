@@ -10,7 +10,7 @@ function Results({ onClose }) {
     }, []);
 
     return (
-        <>
+        <> 
             <div>
                 <div>
                     <h3>Winning number : {winningNum}</h3>

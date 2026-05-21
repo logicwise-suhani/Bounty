@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Round({ onClose }) {
+function Round({ onClose, goToPlayers }) {
     const [rounds, setRounds] = useState([
         {
             roundNumber: "",
@@ -12,6 +12,7 @@ function Round({ onClose }) {
     ]);
     const [roundsDisplay, setRoundsDisplay] = useState([]);
     const [errors, setErrors] = useState({});
+
 
     useEffect(() => {
         const roundsData = localStorage.getItem("rounds");
@@ -208,19 +209,12 @@ function Round({ onClose }) {
                 <div className="rounds-created">
                     <h3>Rounds Created</h3>
                     {roundsDisplay.length === 0 ? (
-                        <p>No rounds found</p>
+                        <p style={{ color: "red" }}>No rounds found</p>
                     ) : (
                         roundsDisplay.map((round) => (
-                            <div
-                                key={round.id}
-                                style={{
-                                    border: "1px solid #ccc",
-                                    margin: "20px",
-                                    padding: "10px",
-                                }}
-                            >
-                                <p><b>Round Number:</b> {round.roundNumber}</p>
-                                <p><b>Players:</b> {round.players} </p>
+                            <div key={round.id} className="round-data">
+                                <p><b>Round Number:</b>{round.roundNumber}</p>
+                                <p><b>Players:</b> {round.players}</p>
                                 <p><b>Chances:</b> {round.chances} </p>
                                 <p><b>Bet Multiplier:</b> {round.betMultiplier} </p>
                                 <p><b>Time:</b> {round.time} </p>
@@ -229,11 +223,13 @@ function Round({ onClose }) {
                         ))
                     )}
 
-                    <div>
+                    <br />
+                    <div className="on-close">
+                        <button style={{ backgroundColor: "lavender" }} onClick={goToPlayers}>View Players</button>
                         <button onClick={onClose}>Close</button>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 }
