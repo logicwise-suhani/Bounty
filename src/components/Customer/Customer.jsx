@@ -21,14 +21,6 @@ function Customer() {
         return () => clearInterval(interval);
     }, []);
 
-    // useEffect(() => {
-    //     const data = localStorage.getItem("rounds");
-    //     if (data) {
-    //         const parsedData = JSON.parse(data);
-    //         setRounds(parsedData);
-    //     }
-    // }, []);
-
     useEffect(() => {
         const data = localStorage.getItem("rounds");
         if (data) {
@@ -40,6 +32,7 @@ function Customer() {
 
     const handleChange = (roundIndex, chanceIndex, boxIndex, e) => {
         const { value } = e.target;
+
         setInputValue((prev) => ({
             ...prev,
             [`${roundIndex}-${chanceIndex}-${boxIndex}`]: value,
@@ -47,16 +40,27 @@ function Customer() {
         setChance(chanceIndex + 1);
     };
 
-    const visibleRounds = (currentId) => {
-        const filteredRounds = rounds.filter((round) => (
-            round.id !== currentId
-        ));
-        console.log(filteredRounds);
+    const handlePlayerAction = () => {
+        const currentRound = rounds[currentRoundIndex];
+        if (!currentRound) return;
+
+        setPlayersPlayed((prev) => {
+            const updated = prev + 1;
+            setInputValue({});
+
+            if (updated >= Number(currentRound.players)) {
+                setCurrentRoundIndex((r) => r + 1);
+                return 0;
+            }
+            return updated;
+        });
+        setChance(0);
     }
+
+    const currentRound = rounds[currentRoundIndex];
 
     return (
         <>
-            <button onClick={visibleRounds}>Click</button>
             <div>
                 <div className="customer-details">
                     <h3>Balance: ₹1000</h3>
@@ -65,40 +69,46 @@ function Customer() {
                 </div>
 
                 <div>
-                    {rounds.length === 0 ? (<p>Come back later</p>) : rounds.map((round, index) => (
-                        <>
-                            <div key={round.id}
-                                style={{
-                                    marginBottom: "30px", border: "1px solid #ccc", padding: "10px",
-                                }}
-                            >
-                                <h3>Round {round.roundNumber}</h3>
+                    {currentRound ? (
+                        <div
+                            style={{
+                                marginBottom: "30px",
+                                border: "1px solid #ccc",
+                                padding: "10px",
+                            }}
+                        >
+                            <h3>Current Round: {currentRound.roundNumber}</h3>
+                            <p>Player: {playersPlayed + 1} / {currentRound.players}</p>
 
-                                <div className="grid">
-                                    {Array.from({
-                                        length: Number(round.chances),
-                                    }).map((_, chanceIndex) => (
+                            <div className="grid">
+                                {Array.from({ length: Number(currentRound.chances) }).map(
+                                    (_, chanceIndex) => (
                                         <div key={chanceIndex}>
                                             <p>Chance: {chanceIndex + 1}</p>
+
                                             <div className="chances-box">
                                                 {Array.from({ length: 9 }).map((_, boxIndex) => (
-                                                    <div key={boxIndex}>
-                                                        <input
-                                                            type="number"
-                                                            min={1}
-                                                            max={99}
-                                                            value={inputValue[`${index}-${chanceIndex}-${boxIndex}`] || ""}
-                                                            onChange={(e) => handleChange(index, chanceIndex, boxIndex, e)}
-                                                        />
-                                                    </div>
+                                                    <input
+                                                        key={boxIndex}
+                                                        type="number"
+                                                        min={1}
+                                                        max={99}
+                                                        value={inputValue[`${currentRoundIndex}-${chanceIndex}-${boxIndex}`] || ""}
+                                                        onChange={(e) => handleChange(currentRoundIndex, chanceIndex, boxIndex, e)}
+                                                    />
                                                 ))}
                                             </div>
                                         </div>
                                     ))}
-                                </div>
                             </div>
-                        </>
-                    ))}
+
+                            <button onClick={handlePlayerAction}>
+                                End
+                            </button>
+                        </div>
+                    ) : (
+                        <p>All rounds completed. Come Back Later!</p>
+                    )}
                 </div>
 
                 <div>
