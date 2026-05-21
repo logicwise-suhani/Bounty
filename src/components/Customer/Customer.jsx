@@ -77,8 +77,8 @@ function Customer() {
                                     padding: "10px",
                                 }}
                             >
-                                <h3>Current Round: {currentRound.roundNumber}</h3>
-                                <p>Player: {playersPlayed + 1} / {currentRound.players}</p>
+                                {/* <h3>Current Round: {currentRound.roundNumber}</h3>
+                                <p>Player: {playersPlayed + 1} / {currentRound.players}</p> */}
 
                                 <div className="grid">
                                     {Array.from({ length: Number(currentRound.chances) }).map(
