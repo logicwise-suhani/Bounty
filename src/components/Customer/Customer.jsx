@@ -40,7 +40,7 @@ function Customer() {
         setChance(chanceIndex + 1);
     };
 
-    const handlePlayerAction = () => {
+    const handleDraw = () => {
         const currentRound = rounds[currentRoundIndex];
         if (!currentRound) return;
 
@@ -60,52 +60,52 @@ function Customer() {
     const currentRound = rounds[currentRoundIndex];
 
     return (
-        <> 
+        <>
             <div>
-                <div className="customer-details">
-                    <h3>Balance: ₹1000</h3>
-                    <h3>Chance: {chance} / 6</h3>
-                    <h3>Reveal in: {new Date(time).toLocaleTimeString()} </h3>
-                </div>
-
                 <div>
                     {currentRound ? (
-                        <div
-                            style={{
-                                marginBottom: "30px",
-                                border: "1px solid #ccc",
-                                padding: "10px",
-                            }}
-                        >
-                            <h3>Current Round: {currentRound.roundNumber}</h3>
-                            <p>Player: {playersPlayed + 1} / {currentRound.players}</p>
-
-                            <div className="grid">
-                                {Array.from({ length: Number(currentRound.chances) }).map(
-                                    (_, chanceIndex) => (
-                                        <div key={chanceIndex}>
-                                            <p>Chance: {chanceIndex + 1}</p>
-
-                                            <div className="chances-box">
-                                                {Array.from({ length: 9 }).map((_, boxIndex) => (
-                                                    <input
-                                                        key={boxIndex}
-                                                        type="number"
-                                                        min={1}
-                                                        max={99}
-                                                        value={inputValue[`${currentRoundIndex}-${chanceIndex}-${boxIndex}`] || ""}
-                                                        onChange={(e) => handleChange(currentRoundIndex, chanceIndex, boxIndex, e)}
-                                                    />
-                                                ))}
-                                            </div>
-                                        </div>
-                                    ))}
+                        <>
+                            <div className="customer-details">
+                                <h3>Balance: ₹1000</h3>
+                                <h3>Chance: {chance} / 6</h3>
+                                <h3>Reveal in: {new Date(time).toLocaleTimeString()} </h3>
                             </div>
+                            <div
+                                style={{
+                                    marginBottom: "30px",
+                                    border: "1px solid #ccc",
+                                    padding: "10px",
+                                }}
+                            >
+                                <h3>Current Round: {currentRound.roundNumber}</h3>
+                                <p>Player: {playersPlayed + 1} / {currentRound.players}</p>
 
-                            <button onClick={handlePlayerAction}>
-                                End
-                            </button>
-                        </div>
+                                <div className="grid">
+                                    {Array.from({ length: Number(currentRound.chances) }).map(
+                                        (_, chanceIndex) => (
+                                            <div key={chanceIndex}>
+                                                <p>Chance: {chanceIndex + 1}</p>
+
+                                                <div className="chances-box">
+                                                    {Array.from({ length: 9 }).map((_, boxIndex) => (
+                                                        <input
+                                                            key={boxIndex}
+                                                            type="number"
+                                                            min={1}
+                                                            max={99}
+                                                            value={inputValue[`${currentRoundIndex}-${chanceIndex}-${boxIndex}`] || ""}
+                                                            onChange={(e) => handleChange(currentRoundIndex, chanceIndex, boxIndex, e)}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                </div>
+
+                                <button onClick={handleDraw}> DRAW </button>
+                            </div>
+                        </>
+
                     ) : (
                         <p>All rounds completed. Come Back Later!</p>
                     )}

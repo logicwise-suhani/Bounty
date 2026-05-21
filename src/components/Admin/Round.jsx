@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import setMinDateTime from "../../Time/minTime";
+import setMaxDateTime from "../../Time/maxTime";
 
 function Round({ onClose, goToPlayers }) {
     const [rounds, setRounds] = useState([
@@ -13,6 +15,8 @@ function Round({ onClose, goToPlayers }) {
     const [roundsDisplay, setRoundsDisplay] = useState([]);
     const [errors, setErrors] = useState({});
 
+    const minDateTime = setMinDateTime();
+    const maxDateTime = setMaxDateTime();
 
     useEffect(() => {
         const roundsData = localStorage.getItem("rounds");
@@ -184,9 +188,11 @@ function Round({ onClose, goToPlayers }) {
                             <div>
                                 Time: {" "}
                                 <input
-                                    type="time"
+                                    type="datetime-local"
                                     name="time"
                                     value={round.time}
+                                    min={minDateTime}
+                                    max={maxDateTime}
                                     onChange={(e) => handleChange(index, e)}
                                 />
                                 {errors[index]?.time && (
@@ -213,11 +219,11 @@ function Round({ onClose, goToPlayers }) {
                     ) : (
                         roundsDisplay.map((round) => (
                             <div key={round.id} className="round-data">
-                                <p><b>Round Number:</b>{round.roundNumber}</p>
-                                <p><b>Players:</b> {round.players}</p>
-                                <p><b>Chances:</b> {round.chances} </p>
-                                <p><b>Bet Multiplier:</b> {round.betMultiplier} </p>
-                                <p><b>Time:</b> {round.time} </p>
+                                <p>Round Number: {round.roundNumber}</p>
+                                <p>Players: {round.players}</p>
+                                <p>Chances: {round.chances} </p>
+                                <p>Bet Multiplier: {round.betMultiplier} </p>
+                                <p>Time: {round.time} </p>
                                 <button onClick={() => handleDelete(round.id)}>Delete</button>
                             </div>
                         ))
@@ -225,7 +231,7 @@ function Round({ onClose, goToPlayers }) {
 
                     <br />
                     <div className="on-close">
-                        <button style={{ backgroundColor: "lavender" }} onClick={goToPlayers}>View Players</button>
+                        {roundsDisplay.length > 0 && <button style={{ backgroundColor: "lavender" }} onClick={goToPlayers}>View Players</button>}
                         <button onClick={onClose}>Close</button>
                     </div>
                 </div>
