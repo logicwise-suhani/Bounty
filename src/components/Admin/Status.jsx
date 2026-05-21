@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function Status({ onClose }) {
-    const [chancesCount, setChancesCount] = useState(0);
+    const [chancesCount, setChancesCount] = useState(0); 
 
     useEffect(() => {
         const roundsData = localStorage.getItem("rounds");

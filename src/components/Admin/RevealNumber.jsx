@@ -28,7 +28,7 @@ function RevealNumber({ onClose }) {
             setRounds(parsedRoundData);
         }
     }, []);
-
+ 
     return (
         <>
             <div>

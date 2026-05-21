@@ -155,7 +155,8 @@ function Round({ onClose }) {
                                 <input
                                     type="number"
                                     name="chances"
-                                    defaultValue={6}
+                                    value={round.chances}
+                                    onChange={(e) => handleChange(index, e)}
                                 />
                                 {errors[index]?.chances && (
                                     <p style={{ color: "red" }}>
@@ -169,7 +170,8 @@ function Round({ onClose }) {
                                 <input
                                     type="text"
                                     name="betMultiplier"
-                                    defaultValue={10}
+                                    value={round.betMultiplier}
+                                    onChange={(e) => handleChange(index, e)}
                                 />
                                 {errors[index]?.betMultiplier && (
                                     <p style={{ color: "red" }}>
