@@ -2,60 +2,69 @@ import { useEffect, useState } from "react";
 
 function Players({ onClose }) {
     const [rounds, setRounds] = useState([]);
+    const [results, setResults] = useState([]);
 
     useEffect(() => {
-        const roundsData = localStorage.getItem("chances");
+        const roundsData = JSON.parse(localStorage.getItem("chances")) || [];
+        const resultsData = JSON.parse(localStorage.getItem("finalResults")) || [];
 
-        if (roundsData) {
-            const parsedRoundData = JSON.parse(roundsData);
-            setRounds(parsedRoundData);
-        }
+        setRounds(roundsData);
+        setResults(resultsData);
     }, []);
 
+    const getRoundResults = (roundIndex) => {
+        return results.filter(r => r.chance === roundIndex + 1);
+    };
+
+    const getWins = (roundIndex) => {
+        return getRoundResults(roundIndex).filter(r => r.status === "WON").length;
+    };
+
+    const getLoss = (roundIndex) => {
+        return getRoundResults(roundIndex).filter(r => r.status === "LOSS").length;
+    };
+
+    const getActive = (roundIndex) => {
+        const predictions = JSON.parse(localStorage.getItem("predictions")) || [];
+        return predictions.filter(p => p.chance === roundIndex + 1).length;
+    };
 
     return (
-        <>
-            <div>
-                <h2>Players</h2>
+        <div className="players">
+            <h2>Players Real Status</h2>
 
-                {rounds.length === 0 ? (
-                    <p>No chances found</p>
-                ) : (
-                    rounds.map((round) => (
-                        <div key={round.id}
-                            style={{
-                                marginBottom: "30px", border: "1px solid #ccc", padding: "10px",
-                            }}
-                        >
-                            <table border="1" cellPadding="10">
-                                <thead>
-                                    <tr>
-                                        <th>Players</th>
-                                        <th>Balance</th>
-                                        <th>Active Chances</th>
-                                        <th>Win</th>
-                                    </tr>
-                                </thead>
+            {rounds.length === 0 ? (
+                <p>No rounds found</p>
+            ) : (
+                rounds.map((round, i) => (
+                    <div key={round.id} className="round-card">
+                        <h3>Round {i + 1}</h3>
 
-                                <tbody>
-                                    {Array.from({
-                                        length: Number(round.players),
-                                    }).map((_, i) => (
-                                        <tr key={i}>
-                                            <td>Player {i + 1}</td>
-                                            <td>₹1000</td>
-                                            <td>{round.chances}</td>
-                                            <td>0</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )))}
+                        <table border="1" cellPadding="10">
+                            <thead>
+                                <tr>
+                                    <th>Max Players</th>
+                                    <th>Active Chances</th>
+                                    <th>Wins</th>
+                                    <th>Loss</th>
+                                </tr>
+                            </thead>
 
-                <button onClick={onClose}>Close</button>
-            </div>
-        </>
+                            <tbody>
+                                <tr>
+                                    <td>{round.players}</td>
+                                    <td>{getActive(i)}</td>
+                                    <td style={{ color: "green" }}>{getWins(i)}</td>
+                                    <td style={{ color: "red" }}>{getLoss(i)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                ))
+            )}
+
+            <button onClick={onClose}>Close</button>
+        </div>
     );
 }
 

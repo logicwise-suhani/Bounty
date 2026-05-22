@@ -5,6 +5,7 @@ import Home from './components/Admin/Home'
 import AdminDashboard from './components/Admin/AdminDashboard'
 import Admin from "./components/Admin/Admin"
 import ShowAvailableRounds from './components/Customer/AvailableRounds'
+import ResultTime from './components/Customer/ResultTime'
 
 function App() {
 
@@ -17,6 +18,8 @@ function App() {
         <Route path='/admin-dashboard' element={<AdminDashboard />} />
         <Route path='/available-rounds' element={<ShowAvailableRounds />} />
       </Routes>
+
+      <ResultTime />
     </>
   )
 }

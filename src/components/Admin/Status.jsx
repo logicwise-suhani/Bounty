@@ -1,31 +1,86 @@
+// import { useEffect, useState } from "react";
+
+// function Status({ onClose }) {
+//     const [chancesCount, setChancesCount] = useState(0); 
+
+//     useEffect(() => {
+//         const roundsData = localStorage.getItem("chances");
+//         const parsedRoundData = JSON.parse(roundsData);
+//         if (parsedRoundData) {
+//             setChancesCount(parsedRoundData.length ? parsedRoundData[0].chances : 0)
+//         }
+//     }, []);
+
+//     return (  
+//         <>
+//             <div>
+//                 {Array.from({ length: chancesCount }).map((_, i) => (
+//                     <div key={i}>Chance {i + 1}: status pending...</div>
+//                 ))}
+
+//                 <div>
+//                     <button onClick={onClose}>Close</button>
+//                 </div>
+//             </div>
+//         </>
+//     )
+
+// };
+
+// export default Status;
+
 import { useEffect, useState } from "react";
 
 function Status({ onClose }) {
-    const [chancesCount, setChancesCount] = useState(0); 
+    const [chancesCount, setChancesCount] = useState(0);
+    const [currentChance, setCurrentChance] = useState(1);
 
     useEffect(() => {
-        const roundsData = localStorage.getItem("chances");
-        const parsedRoundData = JSON.parse(roundsData);
-        if (parsedRoundData) {
-            setChancesCount(parsedRoundData.length ? parsedRoundData[0].chances : 0)
+        const roundsData = JSON.parse(localStorage.getItem("chances"));
+
+        if (roundsData && roundsData.length > 0) {
+            setChancesCount(roundsData[0].chances || 0);
         }
+
+        const savedChance = Number(localStorage.getItem("chance")) || 1;
+        setCurrentChance(savedChance);
     }, []);
-  
-    return ( 
-        <>
-            <div>
-                {Array.from({ length: chancesCount }).map((_, i) => (
-                    <div key={i}>Chance {i + 1}: status pending...</div>
-                ))}
 
-                <div>
-                    <button onClick={onClose}>Close</button>
+    const predictions = JSON.parse(localStorage.getItem("predictions")) || [];
+    const results = JSON.parse(localStorage.getItem("finalResults")) || [];
+
+    const getStatus = (index) => {
+        const isSaved = predictions.some(p => p.chance === index + 1);
+        const hasResult = results[index];
+
+        if (hasResult) return "COMPLETED";
+        if (index + 1 === currentChance) return "ACTIVE";
+        if (isSaved) return "WAITING";
+
+        return "WAITING";
+    };
+
+    return (
+        <div className="status-div">
+            {Array.from({ length: chancesCount }).map((_, i) => (
+                <div className="status"
+                    key={i}
+                    style={{
+                        background:
+                            getStatus(i) === "COMPLETED"
+                                ? "#11dd41"
+                                : getStatus(i) === "ACTIVE"
+                                    ? "#facc15"
+                                    : "#e5e7eb",
+                    }}
+                >
+                    Chance {i + 1}: {getStatus(i)}
                 </div>
-            </div>
-        </>
-    )
+            ))}
 
-};
+            <button onClick={onClose}>Close</button>
+        </div>
+    );
+}
 
 export default Status;
-

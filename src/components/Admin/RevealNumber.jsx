@@ -23,7 +23,7 @@ function RevealNumber({ onClose }) {
     }, []);
 
     return (
-        <div>
+        <div className="reveal">
             {randoms.map((num, i) => (
                 <div key={i}>
                     Chance {i + 1}: {num}

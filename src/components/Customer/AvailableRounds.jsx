@@ -13,7 +13,7 @@ function ShowAvailableRounds() {
 
     return (
         <>
-            <div>
+            <div className="customer-reveal">
                 Available Rounds
                 <div>
                     {rounds.length > 0 ? rounds.map((time, index) => (

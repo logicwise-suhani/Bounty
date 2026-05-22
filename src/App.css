@@ -227,11 +227,30 @@
     width: 50px;
     margin: 10px auto;
     text-align: center;
+    background-color: powderblue;
+    color: black;
+    font-size: 16px;
+    font-weight: 800;
+    border-radius: 10px;
+    outline: none;
+}
+
+.chances-box button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #635bee;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 }
 
 .customer-details h3 {
@@ -240,4 +259,344 @@
     justify-content: center;
     align-items: flex-start;
     margin: 20px;
+}
+
+.status {
+    padding: 10px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+}
+
+.status-div {
+    padding: 20px 20px;
+    margin: 15px;
+}
+
+.status-div button {
+    padding: 15px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #635bee;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.status-div button:hover {
+    background: #635bee;
+    transform: translateY(-2px);
+}
+
+.status {
+    color: black;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.available-round button {
+    padding: 15px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #635bee;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.customer-details h3 {
+    font-weight: 800;
+    color: white;
+}
+
+.grid p {
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+}
+
+.home {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+}
+
+.home button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.home button:first-child {
+    background-color: #ef4444;
+    color: white;
+}
+
+.home button:first-child:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+}
+
+.home button:last-child {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.home button:last-child:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+.home button:active {
+    transform: scale(0.95);
+}
+
+.reveal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.reveal>div {
+    padding: 10px 12px;
+    background: #f5f7ff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reveal button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+    background: #4f46e5;
+    color: white;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.reveal button:hover {
+    background: #3730a3;
+}
+
+.admin-results {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    font-family: Arial, sans-serif;
+}
+
+.admin-results h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 34px;
+    color: #222;
+    font-weight: 800;
+}
+
+.admin-results div {
+    padding: 12px;
+    border-radius: 10px;
+    background: rgb(255, 228, 233);
+}
+
+.admin-results h4 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    color: #333;
+}
+
+.admin-results p {
+    margin: 4px 0;
+    font-size: 20px;
+    color: black;
+}
+
+.admin-results hr {
+    border: none;
+    height: 1px;
+    background: #e5e7eb;
+    margin: 12px 0;
+}
+
+.admin-results h3 {
+    margin-top: 12px;
+    font-size: 24px;
+    color: #111;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-admin button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 18px;
+
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+    background: #4f46e5;
+    color: white;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.btn-admin button:hover {
+    background: #4f46e5;
+}
+
+.players {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: black;
+}
+
+.players h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: white;
+}
+
+.players p {
+    text-align: center;
+    color: #777;
+    font-size: 16px;
+}
+
+.round-card {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    background: #fafafa;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.players table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.players thead {
+    background: #4a90e2;
+    color: #fff;
+}
+
+.players th,
+.players td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.players tbody tr:hover {
+    background: #f5f9ff;
+}
+
+.players button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 18px;
+    border: none;
+    background: #e74c3c;
+    color: white;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.players button:hover {
+    background: #c0392b;
+}
+
+.customer-reveal {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.customer-reveal h3 {
+    background: #f4f6f8;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.customer-reveal h3:hover {
+    background: #e9eef5;
+    transform: scale(1.02);
+}
+
+.customer-reveal button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #007bff;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.customer-reveal button:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.customer-reveal button:active {
+    transform: scale(0.98);
+}
+
+.customer-reveal div {
+    margin-top: 10px;
 }

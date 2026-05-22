@@ -10,6 +10,11 @@ function Customer() {
     const BOXES = 9;
     const [rounds, setRounds] = useState([]);
     const [displayTime, setDisplayTime] = useState(null);
+    const [gameResults, setGameResults] = useState([]);
+    const [balance, setBalance] = useState(
+        Number(localStorage.getItem("balance")) || 1000
+    );
+    const [savedChances, setSavedChances] = useState([]);
 
     const navigate = useNavigate();
 
@@ -31,6 +36,23 @@ function Customer() {
             setDisplayTime(rounds[0].time);
         }
     }, [rounds]);
+
+    useEffect(() => {
+        const savedResults = JSON.parse(localStorage.getItem("finalResults")) || [];
+        setGameResults(savedResults);
+
+        let currentBalance =
+            Number(localStorage.getItem("balance")) || 1000;
+
+        savedResults.forEach((result) => {
+            if (result.status === "WON") {
+                currentBalance = currentBalance * 10;
+            }
+        });
+
+        setBalance(currentBalance);
+        localStorage.setItem("balance", currentBalance);
+    }, []);
 
     const handleChange = (chanceIndex, boxIndex, e) => {
         const { value } = e.target;
@@ -66,12 +88,9 @@ function Customer() {
                 : inputValue[`${chanceIndex}-${i}`]
         );
 
-        const filtered = values.filter(
-            (v) => v !== undefined && v !== ""
-        );
+        const filtered = values.filter((v) => v !== undefined && v !== "");
 
         const hasDuplicate = new Set(filtered).size !== filtered.length;
-
         if (hasDuplicate) {
             alert("Duplicate numbers are not allowed");
             setInputValue((prev) => ({
@@ -135,8 +154,8 @@ function Customer() {
         });
 
         localStorage.setItem("predictions", JSON.stringify(oldData));
-        alert(`Chance ${chanceIndex + 1} saved successfully`);
-
+        // alert(`Chance ${chanceIndex + 1} saved successfully`);
+        setSavedChances((prev) => [...prev, chanceIndex]);
         setChance(chanceIndex + 2);
     };
 
@@ -149,7 +168,9 @@ function Customer() {
 
     const currentRound = activeRound || nextRound;
     const isRoundActive = activeRound && now >= new Date(activeRound.time).getTime();
+
     const TOTAL_CHANCES = currentRound?.chances ? Number(currentRound.chances) : 0;
+
 
     return (
         <>
@@ -157,38 +178,94 @@ function Customer() {
                 <div>
                     <>
                         <div className="customer-details">
-                            <h3>Balance: ₹1000</h3>
+                            <h3>Balance: ₹{balance}</h3>
                             <h3>Chance: {chance} / 6</h3>
-                            <h3>Reveal at: {activeRound ? new Date(currentRound.time).toLocaleString() : "No available rounds"} </h3>
+                            <h3>Reveal at: {nextRound ? new Date(currentRound.time).toLocaleString() : "No available rounds"} </h3>
                         </div>
                         <div
                             style={{
                                 marginBottom: "30px",
-                                border: "1px solid #ccc",
-                                padding: "10px",
+                                padding: "7px",
                             }}
                         >
-                            {activeRound ? <div className="grid">
+                            {currentRound ? <div className="grid">
                                 {Array.from({ length: TOTAL_CHANCES }).map(
                                     (_, chanceIndex) => (
-                                        <div key={chanceIndex}>
-                                            <p>Chance: {chanceIndex + 1}</p>
+                                        <div key={chanceIndex}
+                                            style={{
+                                                backgroundColor:
+                                                    gameResults[chanceIndex]?.status === "WON"
+                                                        ? "#11dd41"
+                                                        : gameResults[chanceIndex]?.status === "LOSS"
+                                                            ? "#eb3140"
+                                                            : "",
 
-                                            <div className="chances-box">
-                                                {Array.from({ length: 9 }).map((_, boxIndex) => (
-                                                    <input
-                                                        key={boxIndex}
-                                                        type="number"
-                                                        min={1}
-                                                        max={99}
-                                                        value={inputValue[`${chanceIndex}-${boxIndex}`] || ""}
-                                                        onChange={(e) => handleChange(chanceIndex, boxIndex, e)}
-                                                        onBlur={(e) => handleBlur(chanceIndex, boxIndex, e)}
-                                                        disabled={chanceIndex !== chance - 1}
-                                                    />
-                                                ))}
-                                                <button onClick={() => handleSave(chanceIndex)} disabled={!isRoundActive}>SAVE</button>
-                                            </div>
+                                                border:
+                                                    gameResults[chanceIndex]?.status === "WON"
+                                                        ? ""
+                                                        : gameResults[chanceIndex]?.status === "LOSS"
+                                                            ? "2px solid red"
+                                                            : "",
+
+                                                borderRadius: "10px", padding: "0px", marginBottom: "15px",
+                                            }}>
+                                            <p>Chance: {chanceIndex + 1}</p>
+                                            {gameResults[chanceIndex] && (
+                                                <p>Your Numbers:{" "}
+                                                    {gameResults[chanceIndex].numbers.join(", ")}
+                                                </p>
+                                            )}
+
+                                            {gameResults[chanceIndex] ? (
+                                                <div style={{ padding: "20px", textAlign: "center" }}>
+                                                    <h2
+                                                        style={{
+                                                            color:
+                                                                gameResults[chanceIndex].status === "WON"
+                                                                    ? "green"
+                                                                    : "white",
+                                                        }}
+                                                    >
+                                                        {gameResults[chanceIndex].status}
+                                                    </h2>
+
+                                                    <h3>
+                                                        Winning Number:{" "}
+                                                        {gameResults[chanceIndex].randomValue}
+                                                    </h3>
+                                                </div>
+                                            ) : (
+                                                <div className="chances-box" >
+                                                    {Array.from({ length: 9 }).map((_, boxIndex) => (
+                                                        <input
+                                                            key={boxIndex}
+                                                            type="number"
+                                                            min={1}
+                                                            max={99}
+                                                            value={inputValue[`${chanceIndex}-${boxIndex}`] || ""}
+                                                            onChange={(e) => handleChange(chanceIndex, boxIndex, e)}
+                                                            onBlur={(e) => handleBlur(chanceIndex, boxIndex, e)}
+                                                            disabled={!isRoundActive || chanceIndex !== chance - 1}
+                                                        />
+                                                    ))}
+
+                                                    <button
+                                                        onClick={() => handleSave(chanceIndex)}
+                                                        disabled={!isRoundActive}
+                                                        style={{
+                                                            backgroundColor: savedChances.includes(chanceIndex)
+                                                                ? "green"
+                                                                : "",
+                                                            color: savedChances.includes(chanceIndex)
+                                                                ? "white"
+                                                                : ""
+                                                        }}
+                                                    >
+                                                        SAVE
+                                                    </button>
+                                                </div>
+                                            )}
+
                                         </div>
                                     ))}
                             </div> : (
@@ -198,7 +275,7 @@ function Customer() {
                     </>
                 </div>
 
-                <div>
+                <div className="available-round">
                     {currentRound && <button onClick={() => navigate("/available-rounds")}>Show available Rounds</button>} {" "}
                     <button onClick={() => navigate("/")}>BACK</button>
                 </div>

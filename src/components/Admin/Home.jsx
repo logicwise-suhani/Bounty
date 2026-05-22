@@ -6,7 +6,7 @@ function Home() {
 
     return (
         <>
-            <div>
+            <div className="home">
                 <button onClick={() => navigate("/create-bounty")}>ADMIN</button> {" "}
                 <button onClick={() => navigate("/customer")}>CUSTOMER</button>
             </div>
