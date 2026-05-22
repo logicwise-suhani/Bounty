@@ -107,7 +107,7 @@ function Round({ onClose, goToPlayers }) {
         }));
         localStorage.setItem("chances", JSON.stringify(reindexed));
         setRoundsDisplay(reindexed);
-    };
+    }; 
 
     return (
         <>

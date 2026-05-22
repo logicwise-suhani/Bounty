@@ -41,18 +41,20 @@ function Customer() {
         const savedResults = JSON.parse(localStorage.getItem("finalResults")) || [];
         setGameResults(savedResults);
 
-        let currentBalance =
-            Number(localStorage.getItem("balance")) || 1000;
+        const baseBalance = 1000;
+        const hasWin = savedResults.some(
+            (result) => result.status === "WON"
+        );
 
-        savedResults.forEach((result) => {
-            if (result.status === "WON") {
-                currentBalance = currentBalance * 10;
-            }
-        });
-
+        const currentBalance = hasWin ? baseBalance * 10 : baseBalance;
         setBalance(currentBalance);
         localStorage.setItem("balance", currentBalance);
     }, []);
+
+    // useEffect(() => {
+    //     setGameResults([]);
+    //     localStorage.removeItem("finalResults");
+    // }, []);
 
     const handleChange = (chanceIndex, boxIndex, e) => {
         const { value } = e.target;
@@ -167,7 +169,7 @@ function Customer() {
     const nextRound = sortedRounds.find((r) => now < new Date(r.time).getTime());
 
     const currentRound = activeRound || nextRound;
-    const isRoundActive = activeRound && now >= new Date(activeRound.time).getTime();
+    // const isRoundActive = activeRound && now >= new Date(activeRound.time).getTime();
     const TOTAL_CHANCES = currentRound?.chances ? Number(currentRound.chances) : 0;
 
 
@@ -221,20 +223,19 @@ function Customer() {
                                                         style={{
                                                             color:
                                                                 gameResults[chanceIndex].status === "WON"
-                                                                    ? "green"
+                                                                    ? "black"
                                                                     : "white",
                                                         }}
                                                     >
                                                         {gameResults[chanceIndex].status}
                                                     </h2>
 
-                                                    <h3>
-                                                        Winning Number:{" "}
+                                                    <h3 className="won">
                                                         {gameResults[chanceIndex].randomValue}
                                                     </h3>
                                                 </div>
                                             ) : (
-                                                <div className="chances-box" >
+                                                <div className="chances-box">
                                                     {Array.from({ length: 9 }).map((_, boxIndex) => (
                                                         <input
                                                             key={boxIndex}

@@ -315,9 +315,20 @@
 }
 
 .grid p {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 800;
     color: white;
+    padding: 20px;
+}
+
+.grid h2 {
+    font-size: 35px;
+}
+
+.grid .won {
+    font-size: 55px;
+    color: white;
+    padding: 20px;
 }
 
 .home {
