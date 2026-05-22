@@ -168,7 +168,6 @@ function Customer() {
 
     const currentRound = activeRound || nextRound;
     const isRoundActive = activeRound && now >= new Date(activeRound.time).getTime();
-
     const TOTAL_CHANCES = currentRound?.chances ? Number(currentRound.chances) : 0;
 
 
@@ -245,13 +244,12 @@ function Customer() {
                                                             value={inputValue[`${chanceIndex}-${boxIndex}`] || ""}
                                                             onChange={(e) => handleChange(chanceIndex, boxIndex, e)}
                                                             onBlur={(e) => handleBlur(chanceIndex, boxIndex, e)}
-                                                            disabled={!isRoundActive || chanceIndex !== chance - 1}
+                                                            disabled={chanceIndex !== chance - 1}
                                                         />
                                                     ))}
 
                                                     <button
                                                         onClick={() => handleSave(chanceIndex)}
-                                                        disabled={!isRoundActive}
                                                         style={{
                                                             backgroundColor: savedChances.includes(chanceIndex)
                                                                 ? "green"
