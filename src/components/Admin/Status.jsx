@@ -4,13 +4,13 @@ function Status({ onClose }) {
     const [chancesCount, setChancesCount] = useState(0); 
 
     useEffect(() => {
-        const roundsData = localStorage.getItem("rounds");
+        const roundsData = localStorage.getItem("chances");
         const parsedRoundData = JSON.parse(roundsData);
         if (parsedRoundData) {
             setChancesCount(parsedRoundData.length ? parsedRoundData[0].chances : 0)
         }
     }, []);
- 
+  
     return ( 
         <>
             <div>

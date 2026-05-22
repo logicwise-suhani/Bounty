@@ -4,6 +4,7 @@ import Customer from './components/Customer/Customer'
 import Home from './components/Admin/Home'
 import AdminDashboard from './components/Admin/AdminDashboard'
 import Admin from "./components/Admin/Admin"
+import ShowAvailableRounds from './components/Customer/AvailableRounds'
 
 function App() {
 
@@ -14,9 +15,10 @@ function App() {
         <Route path='/create-bounty' element={<Admin />} />
         <Route path='/customer' element={<Customer />} />
         <Route path='/admin-dashboard' element={<AdminDashboard />} />
+        <Route path='/available-rounds' element={<ShowAvailableRounds />} />
       </Routes>
     </>
   )
 }
- 
+
 export default App

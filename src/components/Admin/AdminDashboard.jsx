@@ -33,7 +33,7 @@ function AdminDashboard() {
                 <div className="admin-dashboard">
                     <h3>Admin Dashboard</h3>
                     <div>
-                        <button onClick={() => setShow("round")}>Create Round</button> {" "}
+                        <button onClick={() => setShow("round")}>Create Chances</button> {" "}
                         <button onClick={() => setShow("status")}>Status</button> {" "}
                         <button onClick={() => setShow("reveal")}>Reveal</button> {" "}
                         <button onClick={() => setShow("results")}>Results</button>

@@ -5,10 +5,9 @@ import setMaxDateTime from "../../Time/maxTime";
 function Round({ onClose, goToPlayers }) {
     const [rounds, setRounds] = useState([
         {
-            roundNumber: "",
             players: "",
-            chances: "",
-            betMultiplier: "",
+            chances: "6",
+            betMultiplier: "10",
             time: "",
         },
     ]);
@@ -19,7 +18,7 @@ function Round({ onClose, goToPlayers }) {
     const maxDateTime = setMaxDateTime();
 
     useEffect(() => {
-        const roundsData = localStorage.getItem("rounds");
+        const roundsData = localStorage.getItem("chances");
         const parsedRoundData = JSON.parse(roundsData);
         if (parsedRoundData) {
             setRoundsDisplay(parsedRoundData.length ? parsedRoundData : []);
@@ -47,11 +46,6 @@ function Round({ onClose, goToPlayers }) {
 
         rounds.forEach((r, i) => {
             newErrors[i] = {};
-
-            if (!r.roundNumber || Number(r.roundNumber) <= 0) {
-                newErrors[i].roundNumber = "Round Number must be greater than 0";
-                isValid = false;
-            }
 
             if (!r.players || Number(r.players) <= 0 || Number(r.players) > 9) {
                 newErrors[i].players = "Players must be between 0 and 9";
@@ -87,32 +81,31 @@ function Round({ onClose, goToPlayers }) {
 
     const handleSave = () => {
         if (!validateRounds()) return;
-        const existing = JSON.parse(localStorage.getItem("rounds")) || [];
+        const existing = JSON.parse(localStorage.getItem("chances")) || [];
 
         const updated = [...existing, ...rounds.map(r => ({
             ...r,
             id: Date.now() + Math.random()
         }))];
 
-        localStorage.setItem("rounds", JSON.stringify(updated));
+        localStorage.setItem("chances", JSON.stringify([...updated].sort((a, b) => new Date(a.time) - new Date(b.time))));
         setRoundsDisplay(updated);
         setRounds([{
-            roundNumber: "",
             players: "",
-            chances: "",
-            betMultiplier: "",
+            chances: "6",
+            betMultiplier: "10",
             time: ""
         }]);
     };
 
     const handleDelete = (id) => {
-        const existing = JSON.parse(localStorage.getItem("rounds")) || [];
+        const existing = JSON.parse(localStorage.getItem("chances")) || [];
         const updated = existing.filter((r) => r.id !== id);
-        const reindexed = updated.map((r, i) => ({
+        const reindexed = [...updated].sort((a, b) => new Date(a.time) - new Date(b.time)).map((r, i) => ({
             ...r,
             roundNumber: i + 1
         }));
-        localStorage.setItem("rounds", JSON.stringify(reindexed));
+        localStorage.setItem("chances", JSON.stringify(reindexed));
         setRoundsDisplay(reindexed);
     };
 
@@ -122,22 +115,6 @@ function Round({ onClose, goToPlayers }) {
                 <div className="rounds">
                     {rounds.map((round, index) => (
                         <div key={index} style={{ marginBottom: "20px" }}>
-                            <div>
-                                Round Number: {" "}
-                                <input
-                                    type="number"
-                                    min="1"
-                                    name="roundNumber"
-                                    value={round.roundNumber}
-                                    onChange={(e) => handleChange(index, e)}
-                                />
-                                {errors[index]?.roundNumber && (
-                                    <p style={{ color: "red" }}>
-                                        {errors[index].roundNumber}
-                                    </p>
-                                )}
-                            </div>
-
                             <div>
                                 Max Players: {" "}
                                 <input
@@ -206,20 +183,18 @@ function Round({ onClose, goToPlayers }) {
                 </div>
 
                 <div className="save-btn">
-                    <button onClick={handleSave}>Save Round</button>{" "}
+                    <button onClick={handleSave}>Save Chance</button>{" "}
                 </div>
 
                 <br />
                 <hr style={{ width: "100%", color: "black" }} />
 
                 <div className="rounds-created">
-                    <h3>Rounds Created</h3>
                     {roundsDisplay.length === 0 ? (
-                        <p style={{ color: "red" }}>No rounds found</p>
+                        <p style={{ color: "red" }}>No data found</p>
                     ) : (
-                        roundsDisplay.map((round) => (
+                        [...roundsDisplay].sort((a, b) => new Date(a.time) - new Date(b.time)).map((round) => (
                             <div key={round.id} className="round-data">
-                                <p>Round Number: {round.roundNumber}</p>
                                 <p>Players: {round.players}</p>
                                 <p>Chances: {round.chances} </p>
                                 <p>Bet Multiplier: {round.betMultiplier} </p>

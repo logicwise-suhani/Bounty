@@ -4,7 +4,7 @@ function Players({ onClose }) {
     const [rounds, setRounds] = useState([]);
 
     useEffect(() => {
-        const roundsData = localStorage.getItem("rounds");
+        const roundsData = localStorage.getItem("chances");
 
         if (roundsData) {
             const parsedRoundData = JSON.parse(roundsData);
@@ -16,20 +16,17 @@ function Players({ onClose }) {
     return (
         <>
             <div>
-                <h2>Players Round Wise</h2>
+                <h2>Players</h2>
 
                 {rounds.length === 0 ? (
-                    <p>No rounds found</p>
+                    <p>No chances found</p>
                 ) : (
                     rounds.map((round) => (
-                        <div
-                            key={round.id}
+                        <div key={round.id}
                             style={{
                                 marginBottom: "30px", border: "1px solid #ccc", padding: "10px",
                             }}
                         >
-                            <h3>Round {round.roundNumber}</h3>
-
                             <table border="1" cellPadding="10">
                                 <thead>
                                     <tr>
