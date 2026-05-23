@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Customer() {
 
@@ -17,6 +17,7 @@ function Customer() {
     const [savedChances, setSavedChances] = useState([]);
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -29,32 +30,63 @@ function Customer() {
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem("chances")) || [];
         setRounds(data);
-    }, []);
+    }, [location]);
 
     useEffect(() => {
         if (rounds.length > 0) {
             setDisplayTime(rounds[0].time);
         }
     }, [rounds]);
-
     useEffect(() => {
-        const savedResults = JSON.parse(localStorage.getItem("finalResults")) || [];
-        setGameResults(savedResults);
+
+        const loadResults = () => {
+            const savedResults =
+                JSON.parse(localStorage.getItem("finalResults")) || [];
+
+            setGameResults(savedResults);
+        };
+
+        loadResults();
+
+        window.addEventListener(
+            "resultsUpdated",
+            loadResults
+        );
+
+        return () => {
+            window.removeEventListener(
+                "resultsUpdated",
+                loadResults
+            );
+        };
+
+    }, []);
+
+    const updateGameResults = (newResults) => {
+        setGameResults(newResults);
+
+        localStorage.setItem(
+            "finalResults",
+            JSON.stringify(newResults)
+        );
 
         const baseBalance = 1000;
-        const hasWin = savedResults.some(
+
+        const hasWin = newResults.some(
             (result) => result.status === "WON"
         );
 
-        const currentBalance = hasWin ? baseBalance * 10 : baseBalance;
-        setBalance(currentBalance);
-        localStorage.setItem("balance", currentBalance);
-    }, []);
+        const currentBalance = hasWin
+            ? baseBalance * 10
+            : baseBalance;
 
-    // useEffect(() => {
-    //     setGameResults([]);
-    //     localStorage.removeItem("finalResults");
-    // }, []);
+        setBalance(currentBalance);
+
+        localStorage.setItem(
+            "balance",
+            currentBalance
+        );
+    };
 
     const handleChange = (chanceIndex, boxIndex, e) => {
         const { value } = e.target;

@@ -13,7 +13,7 @@ function Admin() {
     const [loginError, setLoginError] = useState("");
 
     const navigate = useNavigate();
-    const adminEmail = "admin@a.com";
+    const adminEmail = "admin@a.com"; 
     const adminPassword = "123456";
 
     useEffect(() => {

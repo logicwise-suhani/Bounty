@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function Results({ onClose }) {
+function Results() {
     const [results, setResults] = useState([]);
     const [randoms, setRandoms] = useState([]);
 
@@ -67,10 +67,6 @@ function Results({ onClose }) {
                 <h3>Total Winners: {totalWinners}</h3>
                 <h3>Total Paid: ₹{totalPaid}</h3>
                 <h3>Platform Profit: ₹{platformProfit}</h3>
-            </div>
-
-            <div className="btn-admin">
-                <button onClick={onClose}>Close</button>
             </div>
         </div>
     );

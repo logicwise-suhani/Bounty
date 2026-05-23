@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function RevealNumber({ onClose }) {
+function RevealNumber() {
     const [randoms, setRandoms] = useState([]);
 
     useEffect(() => {
@@ -29,8 +29,6 @@ function RevealNumber({ onClose }) {
                     Chance {i + 1}: {num}
                 </div>
             ))}
-
-            <button onClick={onClose}>Close</button>
         </div>
     );
 }

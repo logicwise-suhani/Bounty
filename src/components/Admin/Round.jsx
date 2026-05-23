@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import setMinDateTime from "../../Time/minTime";
 import setMaxDateTime from "../../Time/maxTime";
 
-function Round({ onClose, goToPlayers }) {
+function Round() {
     const [rounds, setRounds] = useState([
         {
             players: "",
@@ -184,31 +184,6 @@ function Round({ onClose, goToPlayers }) {
 
                 <div className="save-btn">
                     <button onClick={handleSave}>Save Chance</button>{" "}
-                </div>
-
-                <br />
-                <hr style={{ width: "100%", color: "black" }} />
-
-                <div className="rounds-created">
-                    {roundsDisplay.length === 0 ? (
-                        <p style={{ color: "red" }}>No data found</p>
-                    ) : (
-                        [...roundsDisplay].sort((a, b) => new Date(a.time) - new Date(b.time)).map((round) => (
-                            <div key={round.id} className="round-data">
-                                <p>Players: {round.players}</p>
-                                <p>Chances: {round.chances} </p>
-                                <p>Bet Multiplier: {round.betMultiplier} </p>
-                                <p>Time: {round.time} </p>
-                                <button onClick={() => handleDelete(round.id)}>Delete</button>
-                            </div>
-                        ))
-                    )}
-
-                    <br />
-                    <div className="on-close">
-                        {roundsDisplay.length > 0 && <button style={{ backgroundColor: "lavender" }} onClick={goToPlayers}>View Players</button>}
-                        <button onClick={onClose}>Close</button>
-                    </div>
                 </div>
             </div >
         </>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Players({ onClose }) {
+function Players() {
     const [rounds, setRounds] = useState([]);
     const [results, setResults] = useState([]);
 
@@ -62,8 +62,6 @@ function Players({ onClose }) {
                     </div>
                 ))
             )}
-
-            <button onClick={onClose}>Close</button>
         </div>
     );
 }

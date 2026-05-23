@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Status({ onClose }) {
+function Status() {
     const [chancesCount, setChancesCount] = useState(0);
     const [currentChance, setCurrentChance] = useState(1);
 
@@ -46,8 +46,6 @@ function Status({ onClose }) {
                     Chance {i + 1}: {getStatus(i)}
                 </div>
             ))}
-
-            <button onClick={onClose}>Close</button>
         </div>
     );
 }

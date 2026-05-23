@@ -48,22 +48,16 @@ function ResultTime() {
             "finalResults",
             JSON.stringify(finalResults)
         );
+
+        window.dispatchEvent(
+            new Event("resultsUpdated"));
     };
 
     const now = Date.now();
 
-    const sortedRounds = [...rounds].sort(
-        (a, b) => new Date(a.time) - new Date(b.time)
-    );
-
-    const activeRound = sortedRounds
-        .filter((r) => now >= new Date(r.time).getTime())
-        .pop();
-
-    const nextRound = sortedRounds.find(
-        (r) => now < new Date(r.time).getTime()
-    );
-
+    const sortedRounds = [...rounds].sort((a, b) => new Date(a.time) - new Date(b.time));
+    const activeRound = sortedRounds.filter((r) => now >= new Date(r.time).getTime()).pop();
+    const nextRound = sortedRounds.find((r) => now < new Date(r.time).getTime());
     const currentRound = activeRound || nextRound;
 
     useEffect(() => {
@@ -82,36 +76,6 @@ function ResultTime() {
 
         return () => clearInterval(interval);
     }, [currentRound, resultShown]);
-
-    // return (
-    //     <div>
-    //         <h3>Final Result</h3>
-
-    //         {results.map((item, index) => (
-    //             <div key={index}>
-    //                 <p>Chance: {item.chance}</p>
-
-    //                 <p>
-    //                     Numbers:{" "}
-    //                     {Array.isArray(item.numbers)
-    //                         ? item.numbers.join(", ")
-    //                         : ""}
-    //                 </p>
-
-    //                 <h4
-    //                     style={{
-    //                         color:
-    //                             item.status === "WON"
-    //                                 ? "green"
-    //                                 : "red",
-    //                     }}
-    //                 >
-    //                     {item.status}
-    //                 </h4>
-    //             </div>
-    //         ))}
-    //     </div>
-    // );
 }
 
 export default ResultTime;
