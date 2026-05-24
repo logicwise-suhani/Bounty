@@ -37,55 +37,37 @@ function Customer() {
             setDisplayTime(rounds[0].time);
         }
     }, [rounds]);
+
     useEffect(() => {
-
         const loadResults = () => {
-            const savedResults =
-                JSON.parse(localStorage.getItem("finalResults")) || [];
-
-            setGameResults(savedResults);
+            const savedResults = JSON.parse(localStorage.getItem("finalResults")) || [];
+            updateGameResults(savedResults);
         };
 
         loadResults();
-
-        window.addEventListener(
-            "resultsUpdated",
-            loadResults
-        );
+        window.addEventListener("resultsUpdated", loadResults);
 
         return () => {
-            window.removeEventListener(
-                "resultsUpdated",
-                loadResults
-            );
+            window.removeEventListener("resultsUpdated", loadResults);
         };
-
     }, []);
 
     const updateGameResults = (newResults) => {
         setGameResults(newResults);
 
-        localStorage.setItem(
-            "finalResults",
-            JSON.stringify(newResults)
-        );
+        localStorage.setItem("finalResults", JSON.stringify(newResults));
 
         const baseBalance = 1000;
 
-        const hasWin = newResults.some(
-            (result) => result.status === "WON"
-        );
+        const totalWins = newResults.filter(
+            (result) => result.status === "WON").length;
 
-        const currentBalance = hasWin
-            ? baseBalance * 10
+        const currentBalance = totalWins > 0
+            ? baseBalance * Math.pow(10, totalWins)
             : baseBalance;
 
         setBalance(currentBalance);
-
-        localStorage.setItem(
-            "balance",
-            currentBalance
-        );
+        localStorage.setItem("balance", currentBalance);
     };
 
     const handleChange = (chanceIndex, boxIndex, e) => {
@@ -188,7 +170,6 @@ function Customer() {
         });
 
         localStorage.setItem("predictions", JSON.stringify(oldData));
-        // alert(`Chance ${chanceIndex + 1} saved successfully`);
         setSavedChances((prev) => [...prev, chanceIndex]);
         setChance(chanceIndex + 2);
     };
@@ -199,10 +180,24 @@ function Customer() {
 
     const activeRound = sortedRounds.filter((r) => now >= new Date(r.time).getTime()).pop();
     const nextRound = sortedRounds.find((r) => now < new Date(r.time).getTime());
-
     const currentRound = activeRound || nextRound;
-    // const isRoundActive = activeRound && now >= new Date(activeRound.time).getTime();
+
+    const hasStarted = currentRound?.startTime ? now >= new Date(currentRound.startTime).getTime() : true;
     const TOTAL_CHANCES = currentRound?.chances ? Number(currentRound.chances) : 0;
+
+    const handleLogOut = () => {
+        const confirmLogout = confirm("Are you sure want to logout?");
+        if (confirmLogout) {
+            localStorage.removeItem("customer") || [];
+            localStorage.removeItem("finalResults") || [];
+            localStorage.removeItem("predictions") || [];
+            if (currentRound) {
+                const roundTime = new Date(currentRound.time).getTime();
+                localStorage.setItem(`result_done_${roundTime}`, "false");
+            }
+            navigate("/");
+        }
+    }
 
 
     return (
@@ -213,6 +208,13 @@ function Customer() {
                         <div className="customer-details">
                             <h3>Balance: ₹{balance}</h3>
                             <h3>Chance: {chance} / 6</h3>
+                            <h3>
+                                Start At: {nextRound &&
+                                    currentRound?.startTime
+                                    ? new Date(currentRound.startTime).toLocaleString()
+                                    : "No start time"
+                                }
+                            </h3>
                             <h3>Reveal at: {nextRound ? new Date(currentRound.time).toLocaleString() : "No available rounds"} </h3>
                         </div>
                         <div
@@ -221,6 +223,7 @@ function Customer() {
                                 padding: "7px",
                             }}
                         >
+
                             {currentRound ? <div className="grid">
                                 {Array.from({ length: TOTAL_CHANCES }).map(
                                     (_, chanceIndex) => (
@@ -277,12 +280,13 @@ function Customer() {
                                                             value={inputValue[`${chanceIndex}-${boxIndex}`] || ""}
                                                             onChange={(e) => handleChange(chanceIndex, boxIndex, e)}
                                                             onBlur={(e) => handleBlur(chanceIndex, boxIndex, e)}
-                                                            disabled={chanceIndex !== chance - 1}
+                                                            disabled={!hasStarted || chanceIndex !== chance - 1}
                                                         />
                                                     ))}
 
                                                     <button
                                                         onClick={() => handleSave(chanceIndex)}
+                                                        disabled={!hasStarted || chanceIndex !== chance - 1 || savedChances.includes(chanceIndex)}
                                                         style={{
                                                             backgroundColor: savedChances.includes(chanceIndex)
                                                                 ? "green"
@@ -308,7 +312,7 @@ function Customer() {
 
                 <div className="available-round">
                     {currentRound && <button onClick={() => navigate("/available-rounds")}>Show available Rounds</button>} {" "}
-                    <button onClick={() => navigate("/")}>BACK</button>
+                    <button onClick={handleLogOut}>LogOut</button>
                 </div>
             </div>
         </>

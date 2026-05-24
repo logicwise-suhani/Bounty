@@ -31,7 +31,7 @@ function Status() {
 
     return (
         <div className="status-div">
-            {Array.from({ length: chancesCount }).map((_, i) => (
+            {chancesCount > 0 ? Array.from({ length: chancesCount }).map((_, i) => (
                 <div className="status"
                     key={i}
                     style={{
@@ -45,7 +45,7 @@ function Status() {
                 >
                     Chance {i + 1}: {getStatus(i)}
                 </div>
-            ))}
+            )) : "No status available. Please create a round first."}
         </div>
     );
 }

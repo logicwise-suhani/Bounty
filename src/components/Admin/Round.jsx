@@ -8,6 +8,7 @@ function Round() {
             players: "",
             chances: "6",
             betMultiplier: "10",
+            startTime: "",
             time: "",
         },
     ]);
@@ -69,6 +70,11 @@ function Round() {
                 isValid = false;
             }
 
+            if (!r.startTime) {
+                newErrors[i].startTime = "Start Time is required";
+                isValid = false;
+            }
+
             if (!r.time) {
                 newErrors[i].time = "Time is required";
                 isValid = false;
@@ -94,6 +100,7 @@ function Round() {
             players: "",
             chances: "6",
             betMultiplier: "10",
+            startTime: "",
             time: ""
         }]);
     };
@@ -107,7 +114,7 @@ function Round() {
         }));
         localStorage.setItem("chances", JSON.stringify(reindexed));
         setRoundsDisplay(reindexed);
-    }; 
+    };
 
     return (
         <>
@@ -158,6 +165,23 @@ function Round() {
                                 {errors[index]?.betMultiplier && (
                                     <p style={{ color: "red" }}>
                                         {errors[index].betMultiplier}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div>
+                                Start Time: {" "}
+                                <input
+                                    type="datetime-local"
+                                    name="startTime"
+                                    value={round.startTime}
+                                    min={minDateTime}
+                                    max={maxDateTime}
+                                    onChange={(e) => handleChange(index, e)}
+                                />
+                                {errors[index]?.startTime && (
+                                    <p style={{ color: "red" }}>
+                                        {errors[index].startTime}
                                     </p>
                                 )}
                             </div>
