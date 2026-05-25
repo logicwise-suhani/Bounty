@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Round from "./Round";
 import Status from "./Status";
 import RevealNumber from "./RevealNumber";
-import Players from "./Players";
 import Results from "./Results";
 
 function AdminDashboard() {
@@ -65,6 +64,11 @@ function AdminDashboard() {
         marginBottom: "10px",
     });
 
+    const getActive = (roundIndex) => {
+        const predictions = JSON.parse(localStorage.getItem("predictions")) || [];
+        return predictions.filter(p => p.chance === roundIndex + 1).length;
+    };
+
     return (
         <div
             className="admin-dashboard"
@@ -120,13 +124,6 @@ function AdminDashboard() {
                 </button>
 
                 <button
-                    style={menuStyle("players")}
-                    onClick={() => setShow("players")}
-                >
-                    Players
-                </button>
-
-                <button
                     onClick={handleLogout}
                     style={{
                         width: "100%",
@@ -143,19 +140,12 @@ function AdminDashboard() {
                     Logout
                 </button>
             </div>
- 
-            <div
-                style={{
-                    flex: 1,
-                    padding: "25px",
-                    overflowX: "auto",
-                }}
-            >
+
+            <div style={{ flex: 1, padding: "25px", overflowX: "auto", }}>
                 {show === "round" && <Round />}
                 {show === "status" && <Status />}
                 {show === "reveal" && <RevealNumber />}
                 {show === "results" && <Results />}
-                {show === "players" && <Players />}
                 {show === "history" && (
                     <div>
                         <h3>Game History</h3>
@@ -164,11 +154,7 @@ function AdminDashboard() {
                             border="1"
                             cellPadding="10"
                             width="100%"
-                            style={{
-                                background: "#fff",
-                                borderCollapse: "collapse",
-                            }}
-                        >
+                            style={{ background: "#fff", borderCollapse: "collapse", }}>
                             <thead>
                                 <tr>
                                     <th>Time</th>
@@ -239,6 +225,7 @@ function AdminDashboard() {
                                     <tr>
                                         <th>#</th>
                                         <th>Players</th>
+                                        <th>Active Player</th>
                                         <th>Chances</th>
                                         <th>Multiplier</th>
                                         <th>Time</th>
@@ -264,10 +251,9 @@ function AdminDashboard() {
                                                 <tr key={r.id || i}>
                                                     <td>{i + 1}</td>
                                                     <td>{r.players}</td>
+                                                    <td>{getActive(i)}</td>
                                                     <td>{r.chances}</td>
-                                                    <td>
-                                                        {r.betMultiplier}
-                                                    </td>
+                                                    <td>{r.betMultiplier}</td>
                                                     <td>{r.time}</td>
                                                     <td>
                                                         <button onClick={() => handleDelete(r.id)}>Delete</button>
@@ -286,3 +272,9 @@ function AdminDashboard() {
 }
 
 export default AdminDashboard;
+
+// const getRoundResults = (roundIndex) => {
+//     return results.filter(r => r.chance === roundIndex + 1);
+// };
+// const getWins = (roundIndex) => getRoundResults(roundIndex).filter(r => r.status === "WON").length;
+// const getLoss = (roundIndex) => getRoundResults(roundIndex).filter(r => r.status === "LOSS").length;
