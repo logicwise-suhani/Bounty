@@ -151,9 +151,7 @@ function Customer() {
         }
 
         const chanceData = Array.from({ length: BOXES }).map(
-            (_, boxIndex) =>
-                Number(inputValue[`${chanceIndex}-${boxIndex}`])
-        );
+            (_, boxIndex) => Number(inputValue[`${chanceIndex}-${boxIndex}`]));
 
         const oldData = JSON.parse(localStorage.getItem("predictions")) || [];
         const alreadyExists = oldData.some((item) => {
@@ -170,8 +168,13 @@ function Customer() {
         });
 
         localStorage.setItem("predictions", JSON.stringify(oldData));
+        localStorage.setItem("chance", chanceIndex + 2);
         setSavedChances((prev) => [...prev, chanceIndex]);
-        setChance(chanceIndex + 2);
+        const nextChance = chanceIndex + 2;
+        setChance(nextChance);
+
+        localStorage.setItem("chance", nextChance);
+        window.dispatchEvent(new Event("chanceUpdated"));
     };
 
     const now = new Date().getTime();
@@ -190,7 +193,6 @@ function Customer() {
         if (confirmLogout) {
             localStorage.removeItem("customer") || [];
             localStorage.removeItem("finalResults") || [];
-            localStorage.removeItem("predictions") || [];
             if (currentRound) {
                 const roundTime = new Date(currentRound.time).getTime();
                 localStorage.setItem(`result_done_${roundTime}`, "false");
@@ -199,7 +201,6 @@ function Customer() {
         }
     }
 
-
     return (
         <>
             <div>
@@ -207,7 +208,7 @@ function Customer() {
                     <>
                         <div className="customer-details">
                             <h3>Balance: ₹{balance}</h3>
-                            <h3>Chance: {chance} / 6</h3>
+                            <h3>Chance: {chance} / {TOTAL_CHANCES}</h3>
                             <h3>
                                 Start At: {nextRound &&
                                     currentRound?.startTime
@@ -223,7 +224,6 @@ function Customer() {
                                 padding: "7px",
                             }}
                         >
-
                             {currentRound ? <div className="grid">
                                 {Array.from({ length: TOTAL_CHANCES }).map(
                                     (_, chanceIndex) => (
