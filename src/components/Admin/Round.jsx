@@ -105,17 +105,6 @@ function Round() {
         }]);
     };
 
-    const handleDelete = (id) => {
-        const existing = JSON.parse(localStorage.getItem("chances")) || [];
-        const updated = existing.filter((r) => r.id !== id);
-        const reindexed = [...updated].sort((a, b) => new Date(a.time) - new Date(b.time)).map((r, i) => ({
-            ...r,
-            roundNumber: i + 1
-        }));
-        localStorage.setItem("chances", JSON.stringify(reindexed));
-        setRoundsDisplay(reindexed);
-    };
-
     return (
         <>
             <div className="create-round">

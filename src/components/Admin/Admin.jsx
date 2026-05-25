@@ -127,7 +127,7 @@ function Admin() {
 
     return (
         <>
-            <div>
+            <div className="admin-header">
                 <h1>Bounty Prize!</h1>
             </div>
 

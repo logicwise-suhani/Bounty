@@ -6,7 +6,6 @@ function RevealNumber() {
     useEffect(() => {
         const roundsData = localStorage.getItem("chances");
         const parsedRoundData = JSON.parse(roundsData);
-
         if (!parsedRoundData) return;
 
         const saved = localStorage.getItem("randomNum");
@@ -24,11 +23,13 @@ function RevealNumber() {
 
     return (
         <div className="reveal">
-            {randoms.map((num, i) => (
+            {randoms.length > 0 ? randoms.map((num, i) => (
                 <div key={i}>
                     Chance {i + 1}: {num}
                 </div>
-            ))}
+            )) : (
+                <p>No reveal available. Create round first.</p>
+            )}
         </div>
     );
 }

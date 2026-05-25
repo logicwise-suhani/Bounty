@@ -10,23 +10,16 @@ function Results() {
             setResults([]);
             return;
         }
-
+ 
         let storedRandoms = JSON.parse(localStorage.getItem("randomNum"));
-
         if (!storedRandoms || storedRandoms.length !== predictions.length) {
-            storedRandoms = predictions.map(
-                () => Math.floor(Math.random() * 99) + 1
-            );
-
+            storedRandoms = predictions.map(() => Math.floor(Math.random() * 99) + 1);
             localStorage.setItem("randomNum", JSON.stringify(storedRandoms));
         }
 
         const finalResults = predictions.map((item, index) => {
             const winNumber = storedRandoms[index];
-
-            const isWin =
-                Array.isArray(item.numbers) &&
-                item.numbers.includes(winNumber);
+            const isWin = Array.isArray(item.numbers) && item.numbers.includes(winNumber);
 
             return {
                 chance: item.chance,

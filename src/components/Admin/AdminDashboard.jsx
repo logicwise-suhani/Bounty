@@ -95,7 +95,7 @@ function AdminDashboard() {
                     style={menuStyle("round")}
                     onClick={() => setShow("round")}
                 >
-                    Rounds
+                    Create Round
                 </button>
 
                 <button
@@ -143,7 +143,7 @@ function AdminDashboard() {
                     Logout
                 </button>
             </div>
-
+ 
             <div
                 style={{
                     flex: 1,

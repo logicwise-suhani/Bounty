@@ -54,13 +54,10 @@ function Customer() {
 
     const updateGameResults = (newResults) => {
         setGameResults(newResults);
-
         localStorage.setItem("finalResults", JSON.stringify(newResults));
 
         const baseBalance = 1000;
-
-        const totalWins = newResults.filter(
-            (result) => result.status === "WON").length;
+        const totalWins = newResults.filter((result) => result.status === "WON").length;
 
         const currentBalance = totalWins > 0
             ? baseBalance * Math.pow(10, totalWins)
@@ -95,7 +92,6 @@ function Customer() {
 
     const handleBlur = (chanceIndex, boxIndex, e) => {
         const value = e.target.value;
-
         if (!value) return;
 
         const values = Array.from({ length: BOXES }).map((_, i) =>
@@ -105,7 +101,6 @@ function Customer() {
         );
 
         const filtered = values.filter((v) => v !== undefined && v !== "");
-
         const hasDuplicate = new Set(filtered).size !== filtered.length;
         if (hasDuplicate) {
             alert("Duplicate numbers are not allowed");
@@ -222,6 +217,7 @@ function Customer() {
                             style={{
                                 marginBottom: "30px",
                                 padding: "7px",
+                                color: "black"
                             }}
                         >
                             {currentRound ? <div className="grid">
@@ -243,7 +239,7 @@ function Customer() {
                                                             ? "2px solid red"
                                                             : "",
 
-                                                borderRadius: "10px", padding: "0px", marginBottom: "15px",
+                                                borderRadius: "10px", marginBottom: "15px",
                                             }}>
                                             <p>Chance: {chanceIndex + 1}</p>
                                             {gameResults[chanceIndex] && (
@@ -280,13 +276,13 @@ function Customer() {
                                                             value={inputValue[`${chanceIndex}-${boxIndex}`] || ""}
                                                             onChange={(e) => handleChange(chanceIndex, boxIndex, e)}
                                                             onBlur={(e) => handleBlur(chanceIndex, boxIndex, e)}
-                                                            disabled={!hasStarted || chanceIndex !== chance - 1}
+                                                            disabled={!nextRound || !hasStarted || chanceIndex !== chance - 1}
                                                         />
                                                     ))}
 
                                                     <button
                                                         onClick={() => handleSave(chanceIndex)}
-                                                        disabled={!hasStarted || chanceIndex !== chance - 1 || savedChances.includes(chanceIndex)}
+                                                        disabled={!nextRound || !hasStarted || chanceIndex !== chance - 1 || savedChances.includes(chanceIndex)}
                                                         style={{
                                                             backgroundColor: savedChances.includes(chanceIndex)
                                                                 ? "green"

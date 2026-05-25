@@ -55,16 +55,16 @@
     transform: scale(0.98);
 }
 
-.admin-dashboard > button {
+.admin-dashboard>button {
     background: #dc2626;
     margin-top: 15px;
 }
 
-.admin-dashboard > button:hover {
+.admin-dashboard>button:hover {
     background: #b91c1c;
 }
 
-.admin-dashboard > div {
+.admin-dashboard>div {
     margin-bottom: 25px;
 }
 
@@ -120,7 +120,7 @@
 
 .create-round {
     max-width: 500px;
-    margin: 60px 230px;
+    margin: 60px 376px;
     padding: 80px;
     background: #ffffff;
     border-radius: 16px;
@@ -241,9 +241,9 @@
 }
 
 .chances-box {
-    border: 1px solid white;
+    border: 1px solid black;
     padding: 60px 40px;
-    margin: 40px;
+    margin-left: 170px;
     width: 200px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -338,13 +338,13 @@
 
 .customer-details h3 {
     font-weight: 800;
-    color: white;
+    color: black;
 }
 
 .grid p {
     font-size: 25px;
     font-weight: 800;
-    color: white;
+    color: black;
     padding: 20px;
 }
 
@@ -529,7 +529,7 @@
     text-align: center;
     margin-bottom: 20px;
     font-size: 28px;
-    color: white;
+    color: black;
 }
 
 .players p {
@@ -637,4 +637,8 @@
 
 .customer-reveal div {
     margin-top: 10px;
+}
+
+.admin-header h1 {
+    color: black;
 }

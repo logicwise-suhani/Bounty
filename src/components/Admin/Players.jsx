@@ -17,14 +17,12 @@ function Players() {
     };
 
     const getWins = (roundIndex) => getRoundResults(roundIndex).filter(r => r.status === "WON").length;
-
     const getLoss = (roundIndex) => getRoundResults(roundIndex).filter(r => r.status === "LOSS").length;
-
     const getActive = (roundIndex) => {
         const predictions = JSON.parse(localStorage.getItem("predictions")) || [];
         return predictions.filter(p => p.chance === roundIndex + 1).length;
     };
-
+ 
     return (
         <div className="players">
             <h2>Players Status</h2>

@@ -5,7 +5,6 @@ function ResultTime() {
     const showResult = () => {
         let randomNum = JSON.parse(localStorage.getItem("randomNum")) || [];
         const prediction = JSON.parse(localStorage.getItem("predictions")) || [];
-        const chances = JSON.parse(localStorage.getItem("chances")) || [];
 
         if (!randomNum.length) {
             randomNum = prediction.map(() => {
@@ -45,7 +44,7 @@ function ResultTime() {
             time: new Date().toISOString(),
             player: playerName,
             totalBalance,
-            results: finalResults,
+            results: finalResults.length > 0 ? finalResults : "No data",
         });
 
         localStorage.setItem("gameHistory", JSON.stringify(history));
